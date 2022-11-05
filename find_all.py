@@ -80,4 +80,34 @@ def find_all(sum_dig, digs):
         return []
     else:
         return [counter(), min(), max()]
+    
+#my solutions
+#solution3, using modulo instead of string, also not efficient enough
+
+def find_all(sum_digs, digs):
+
+    def sum_digits_compare(number, value):
+        counter = 0
+        for i in range (0, len(str(number))):
+            counter += int((number/(10**i))%10)
+        if counter == value:
+            return True
+        else:
+            return False
+
+    def check_order(number):
+            if all( int((number/(10**j))%10) <= int((number/(10**(j-1)))%10) for j in range(len(str(number)),0,-1) ):
+                return True
+            else:
+                return False
+
+    if sum_digs  > digs*9:
+        return []
+    else:
+        values = []
+        for i in range(int("1"+"0"*(digs-1)), int("9"*digs)+1):
+            if sum_digits_compare(i, sum_digs) and check_order(i):
+                values.append(i)
+    return [len(values), min(values), max(values)]  
+    
 
